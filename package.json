@@ -1,0 +1,22 @@
+{
+  "name": "swiftcloud",
+  "version": "1.0.0",
+  "description": "rest api for swiftcloud",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcvillareal/SwiftCloud.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcvillareal/SwiftCloud/issues"
+  },
+  "homepage": "https://github.com/marcvillareal/SwiftCloud#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
