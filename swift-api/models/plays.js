@@ -1,10 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const playSchema = new mongoose.Schema({
-  song: { type: mongoose.Schema.Types.ObjectId, ref: 'Song', required: true },
-  month: { type: String, required: true },
-  year: { type: Number, required: true },
-  plays: { type: Number, default: 0 }
-});
+const playSchema = new mongoose.Schema(
+  {
+    song: { type: mongoose.Schema.Types.ObjectId, ref: "Song", required: true },
+    month: { type: String, required: true },
+    year: { type: Number, required: true },
+    plays: { type: Number, default: 0 },
+  },
+  { collection: "Plays" }
+); 
 
-module.exports = mongoose.model('Play', playSchema);
+module.exports = mongoose.model("Play", playSchema);

@@ -1,8 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const Song = require('./models/song');
-const Plays = require('./models/plays');
+const indexRouter = require('./routes/index'); 
 
 const app = express();
 const port = 3000;
@@ -16,6 +15,9 @@ mongoose.connect(process.env.MONGODB_URI)
 app.get('/', (req, res) => {
   res.send('SwiftCloud Test');
 });
+
+// Use the imported routes
+app.use('/', indexRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
