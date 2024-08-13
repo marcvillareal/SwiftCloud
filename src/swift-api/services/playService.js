@@ -44,7 +44,6 @@ async function getSongOfTheYear(year) {
 }
 
 // Song of the Month
-
 async function getSongOfTheMonth(year, month) {
   const songOfTheMonth = await Play.aggregate([
     { $match: { year, month } }, // Filter plays by the given year and month
@@ -62,7 +61,7 @@ async function getSongOfTheMonth(year, month) {
     },
     {
       $lookup: {
-        from: "songs", // Join with the songs collection to get song details
+        from: "Songs", // Connects to database collection "Songs"
         localField: "_id",
         foreignField: "_id",
         as: "song",
