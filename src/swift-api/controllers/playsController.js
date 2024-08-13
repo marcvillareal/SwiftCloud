@@ -63,9 +63,32 @@ async function getSongOfAllTime(req, res) {
   }
 }
 
+// Top 5 Songs of the Year
+
+async function getTop5SongsOfTheYear(req, res) {
+  const year = parseInt(req.params.year);
+
+  if (isNaN(year)) {
+    return res.status(400).json({ message: "Invalid year" });
+  }
+
+  try {
+    const top5Songs = await playService.getTop5SongsOfTheYear(year);
+    if (top5Songs && top5Songs.length > 0) {
+      return res.status(200).json(top5Songs);
+    } else {
+      return res
+        .status(404)
+        .json({ message: "No song data found for the given year" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
 
 module.exports = {
   getSongOfTheYear,
   getSongOfTheMonth,
   getSongOfAllTime,
+  getTop5SongsOfTheYear,
 };
