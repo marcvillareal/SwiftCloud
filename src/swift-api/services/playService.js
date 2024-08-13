@@ -85,7 +85,50 @@ async function getSongOfTheMonth(year, month) {
   return songOfTheMonth[0] || null; // Return the song or null if no results
 }
 
+// Best Song of All Time
+
+async function getSongOfAllTime() {
+  const SongOfAllTime = await Play.aggregate([
+    {
+      $group: {
+        _id: "$song", // Group by song
+        totalPlays: { $sum: "$plays" }, // Sum the plays for each song
+      },
+    },
+    {
+      $sort: { totalPlays: -1 }, // Sort by total plays in descending order
+    },
+    {
+      $limit: 1, // Get the song with the most plays
+    },
+    {
+      $lookup: {
+        from: "Songs", // Join with the songs collection to get song details
+        localField: "_id",
+        foreignField: "_id",
+        as: "song",
+      },
+    },
+    {
+      $unwind: "$song", // Unwind the song array
+    },
+    {
+      $project: {
+        _id: 0,
+        title: "$song.title",
+        artist: "$song.artist",
+        album: "$song.album",
+        year: "$song.year",
+        totalPlays: 1,
+      },
+    },
+  ]);
+
+  return SongOfAllTime[0] || null; // Return the song or null if no results
+}
+
 module.exports = {
   getSongOfTheYear,
   getSongOfTheMonth,
+  getSongOfAllTime,
 };

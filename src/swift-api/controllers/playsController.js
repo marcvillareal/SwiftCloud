@@ -48,7 +48,24 @@ async function getSongOfTheMonth(req, res) {
   }
 }
 
+// Best Song of All Time
+
+async function getSongOfAllTime(req, res) {
+  try {
+    const bestSong = await playService.getSongOfAllTime();
+    if (bestSong) {
+      return res.status(200).json(bestSong);
+    } else {
+      return res.status(404).json({ message: "No song data found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+
 module.exports = {
   getSongOfTheYear,
   getSongOfTheMonth,
+  getSongOfAllTime,
 };
