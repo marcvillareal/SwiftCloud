@@ -217,10 +217,51 @@ async function getTopWriterOfTheYear(year) {
   }
 }
 
+// Most Featured Artist
+
+async function getMostFeaturedArtist(year) {
+  try {
+    const mostFeaturedArtist = await Song.aggregate([
+      // Match songs by the given year and exclude Taylor Swift
+      { $match: { year: year, artist: { $ne: "Taylor Swift" } } },
+
+      // Group by artist and count the number of songs they are featured in
+      {
+        $group: {
+          _id: "$artist", // Group by artist
+          songCount: { $sum: 1 }, // Count the number of songs
+        },
+      },
+
+      // Sort by the number of songs in descending order
+      { $sort: { songCount: -1 } },
+
+      // Limit to the top artist
+      { $limit: 1 },
+
+      // Optional: Project the result to rename fields
+      {
+        $project: {
+          _id: 0,
+          artist: "$_id", // Field name for artist
+          songCount: 1, // Field name for number of songs
+        },
+      },
+    ]);
+
+    // Return the most featured artist or null if no results
+    return mostFeaturedArtist[0] || null;
+  } catch (error) {
+    console.error("Error in getMostFeaturedArtist:", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getSongOfTheYear,
   getSongOfTheMonth,
   getSongOfAllTime,
   getTop5SongsOfTheYear,
   getTopWriterOfTheYear,
+  getMostFeaturedArtist,
 };
