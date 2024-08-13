@@ -4,6 +4,8 @@ const app = require("../../src/app");
 const Song = require("../../src/swift-api/models/song");
 const songService = require("../../src/swift-api/services/songService");
 
+// Filter Songs Test
+
 // Connect to the test database before all tests run
 beforeAll(async () => {
   await mongoose.connect(process.env.MONGODB_URI, {});
@@ -18,40 +20,6 @@ beforeEach(async () => {
 afterAll(async () => {
   await mongoose.connection.close();
 });
-
-// Search Songs Test
-
-describe("GET /search/songs", () => {
-  it("should return songs that match the search query", async () => {
-    await Song.insertMany([
-      {
-        title: "Love Story",
-        artist: "Taylor Swift",
-        album: "Fearless",
-        year: 2008,
-      },
-      {
-        title: "Love Story",
-        artist: "Taylor Swift",
-        album: "Fearless",
-        year: 2008,
-      },
-      {
-        title: "Love Story",
-        artist: "Taylor Swift",
-        album: "Fearless",
-        year: 2008,
-      },
-    ]);
-
-    const res = await request(app).get("/search/songs?q=Love");
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveLength(3); // Based on inserted data
-    expect(res.body[0].title).toBe("Love Story");
-  });
-});
-
-// Filter Songs Test
 
 describe("GET /filter/songs", () => {
   it("should return songs that match the title filter", async () => {

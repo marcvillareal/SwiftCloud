@@ -1,6 +1,6 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
-const app = require("../../src/app"); // Adjust path to your app
+const app = require("../../src/app");
 const Play = require("../../src/swift-api/models/plays");
 const Song = require("../../src/swift-api/models/song");
 

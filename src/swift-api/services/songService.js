@@ -1,8 +1,12 @@
 const Song = require("../models/song");
 
+// Search Songs
+
 const searchSongs = async (query) => {
   return await Song.find({ title: new RegExp(query, "i") }); // Searches song via title
 };
+
+// Filter Songs
 
 const filterSongs = async (filters) => {
   const query = {};
