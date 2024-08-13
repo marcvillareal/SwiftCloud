@@ -132,6 +132,28 @@ async function getMostFeaturedArtist(req, res) {
   }
 }
 
+// Best Album of the Month
+
+async function getBestAlbumOfTheMonth(req, res) {
+  const year = parseInt(req.params.year);
+  const month = req.params.month;
+
+  if (isNaN(year) || !month) {
+    return res.status(400).json({ message: "Invalid year or month" });
+  }
+
+  try {
+    const bestAlbum = await playService.getBestAlbumOfTheMonth(year, month);
+    if (bestAlbum) {
+      return res.status(200).json(bestAlbum);
+    } else {
+      return res.status(404).json({ message: "No album data found for the given month and year" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
   getSongOfTheYear,
   getSongOfTheMonth,
@@ -139,4 +161,5 @@ module.exports = {
   getTop5SongsOfTheYear,
   getTopWriterOfTheYear,
   getMostFeaturedArtist,
+  getBestAlbumOfTheMonth,
 };

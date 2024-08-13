@@ -257,6 +257,71 @@ async function getMostFeaturedArtist(year) {
   }
 }
 
+// Best Album of the Month
+
+async function getBestAlbumOfTheMonth(year, month) {
+  try {
+    const bestAlbum = await Play.aggregate([
+      // Match plays by the given year and month
+      { $match: { year: year, month: month } },
+
+      // Group by song to sum up the plays for each song
+      {
+        $group: {
+          _id: "$song", // Group by song
+          totalPlays: { $sum: "$plays" }, // Sum the plays for each song
+        },
+      },
+
+      // Join with the songs collection to get song details
+      {
+        $lookup: {
+          from: "Songs", // Ensure this matches the collection name in your schema
+          localField: "_id",
+          foreignField: "_id",
+          as: "songDetails",
+        },
+      },
+
+      // Unwind the song details array
+      { $unwind: "$songDetails" },
+
+      // Group by album and sum up the plays for each album
+      {
+        $group: {
+          _id: "$songDetails.album", // Group by album
+          totalPlays: { $sum: "$totalPlays" }, // Sum the plays for each album
+          albumDetails: { $first: "$songDetails" }, // Include album details
+        },
+      },
+
+      // Sort by total plays in descending order
+      { $sort: { totalPlays: -1 } },
+
+      // Limit to the top album
+      { $limit: 1 },
+
+      // Project the result to rename fields
+      {
+        $project: {
+          _id: 0,
+          album: "$_id",
+          totalPlays: 1,
+          title: "$albumDetails.title",
+          artist: "$albumDetails.artist",
+          year: "$albumDetails.year",
+        },
+      },
+    ]);
+
+    // Return the best album or null if no results
+    return bestAlbum[0] || null;
+  } catch (error) {
+    console.error("Error in getBestAlbumOfTheMonth:", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getSongOfTheYear,
   getSongOfTheMonth,
@@ -264,4 +329,5 @@ module.exports = {
   getTop5SongsOfTheYear,
   getTopWriterOfTheYear,
   getMostFeaturedArtist,
+  getBestAlbumOfTheMonth,
 };
