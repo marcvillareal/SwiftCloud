@@ -1,4 +1,5 @@
 const Play = require("../models/plays");
+const Song = require("../models/song");
 
 // Song of the Year
 
@@ -127,7 +128,7 @@ async function getSongOfAllTime() {
   return SongOfAllTime[0] || null; // Return the song or null if no results
 }
 
-// Top 5 Songs of the Year 
+// Top 5 Songs of the Year
 
 async function getTop5SongsOfTheYear(year) {
   const top5SongsOfTheYear = await Play.aggregate([
@@ -170,9 +171,56 @@ async function getTop5SongsOfTheYear(year) {
   return top5SongsOfTheYear; // Return the array of top 5 songs
 }
 
+// Top Song Writer of the Year
+
+async function getTopWriterOfTheYear(year) {
+  try {
+    const topWriterOfTheYear = await Song.aggregate([
+      // Match songs by the given year
+      { $match: { year } },
+
+      // Unwind the writers array so each writer is treated as a separate document
+      { $unwind: "$writers" },
+
+      // Exclude "Taylor Swift" from the results
+      { $match: { writers: { $ne: "Taylor Swift" } } },
+
+      // Group by writer and count the number of songs they have written
+      {
+        $group: {
+          _id: "$writers", // Group by writer
+          songCount: { $sum: 1 }, // Count the number of songs
+        },
+      },
+
+      // Sort by the number of songs in descending order
+      { $sort: { songCount: -1 } },
+
+      // Limit to the top writer
+      { $limit: 1 },
+
+      // Optional: Project the result to rename fields
+      {
+        $project: {
+          _id: 0,
+          writer: "$_id", // Field name for writer
+          songCount: 1, // Field name for number of songs
+        },
+      },
+    ]);
+
+    // Return the top writer or null if no results
+    return topWriterOfTheYear[0] || null;
+  } catch (error) {
+    console.error("Error in getTopWriterOfTheYear:", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getSongOfTheYear,
   getSongOfTheMonth,
   getSongOfAllTime,
   getTop5SongsOfTheYear,
+  getTopWriterOfTheYear,
 };
