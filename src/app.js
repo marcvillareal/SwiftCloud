@@ -2,6 +2,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const importDataRouter = require("./swift-api/routes/importDataRoute");
 const songRoutes = require("../src/swift-api/routes/songRoutes");
+const playsRoutes = require("../src/swift-api/routes/playsRoutes");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 // Use imported routes here
 app.use("/", importDataRouter);
 app.use("/", songRoutes);
+app.use("/", playsRoutes)
 
 // Export the app for testing, and conditionally start the server
 if (process.env.NODE_ENV !== "test") {
