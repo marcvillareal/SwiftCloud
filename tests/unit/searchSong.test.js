@@ -2,11 +2,10 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../../src/app");
 const Song = require("../../src/swift-api/models/song");
-const songService = require("../../src/swift-api/services/songService");
 
 // Connect to the test database before all tests run
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGODB_URI, {});
+  await mongoose.connect(process.env.MONGODB_URI_TEST, {});
 });
 
 // Clear the database before each test
