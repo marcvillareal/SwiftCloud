@@ -143,7 +143,7 @@ async function getTop5SongsOfTheYear(year) {
       $sort: { totalPlays: -1 }, // Sort by total plays in descending order
     },
     {
-      $limit: 15, // Limit to top 5 songs
+      $limit: 5, // Limit to top 5 songs
     },
     {
       $lookup: {

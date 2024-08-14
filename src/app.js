@@ -14,7 +14,7 @@ connectDB();
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("SwiftCloud Test");
+  res.send("SwiftCloud API");
 });
 
 // Use imported routes here

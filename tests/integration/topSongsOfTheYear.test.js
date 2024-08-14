@@ -3,8 +3,15 @@ const mongoose = require("mongoose");
 const app = require("../../src/app");
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGODB_URI, {});
+  if (mongoose.connection.readyState === 0) {
+    // Check if not already connected
+    await mongoose.connect(process.env.MONGODB_URI_TEST, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  }
 });
+
 
 afterAll(async () => {
   await mongoose.connection.close();

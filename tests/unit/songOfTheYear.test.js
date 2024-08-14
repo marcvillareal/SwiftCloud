@@ -6,7 +6,13 @@ const Song = require("../../src/swift-api/models/song");
 
 // Connect to the test database before all tests run
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGODB_URI_TEST, {});
+  if (mongoose.connection.readyState === 0) {
+    // Check if not already connected
+    await mongoose.connect(process.env.MONGODB_URI_TEST, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  }
 });
 
 // Clear the database before each test
