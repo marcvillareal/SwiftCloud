@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "40c27fcc-e1e5-478d-b98a-38691f655aae",
+		"name": "SwiftCloud API",
+		"description": "An API documentation for Interesting Taylor Swift Queries!",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21121193"
+	},
+	"item": [
+		{
+			"name": "Search Song",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Love Story\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/search/songs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"search",
+						"songs"
+					]
+				},
+				"description": "Searches for a song by title"
+			},
+			"response": []
+		},
+		{
+			"name": "Filter Song",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"album \": \"Fearless\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/filter/songs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"filter",
+						"songs"
+					]
+				},
+				"description": "Filtering function for e.g. album - it filters out all songs in that album"
+			},
+			"response": []
+		},
+		{
+			"name": "Song of the Year",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/song-of-the-year/2019",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"song-of-the-year",
+						"2019"
+					]
+				},
+				"description": "Searches for song of the year by filtering year and fetching song with most plays."
+			},
+			"response": []
+		},
+		{
+			"name": "Song of the Month",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/song-of-the-month/2020/July",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"song-of-the-month",
+						"2020",
+						"July"
+					]
+				},
+				"description": "Searches for song of the month by filtering month and fetching song with most plays."
+			},
+			"response": []
+		},
+		{
+			"name": "Song of All TIme",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/song-of-all-time",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"song-of-all-time"
+					]
+				},
+				"description": "Searches for greatest song of all time by fetching song with most plays."
+			},
+			"response": []
+		},
+		{
+			"name": "Top 5 Songs of the Year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/top-5-songs-of-the-year/2012",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"top-5-songs-of-the-year",
+						"2012"
+					]
+				},
+				"description": "Searches for top 5 songs by fetching 5 songs with most plays in descending order."
+			},
+			"response": []
+		},
+		{
+			"name": "Top Song Writer of the Year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/top-writer-of-the-year/2020",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"top-writer-of-the-year",
+						"2020"
+					]
+				},
+				"description": "Searches for top song writer of th year by fetching most songs written in that year."
+			},
+			"response": []
+		},
+		{
+			"name": "Most Featured Arist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Searches for most featured artist by fetching most times featured with Taylor Swift in a year."
+			},
+			"response": []
+		},
+		{
+			"name": "Best Album of the Month",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Searches for best album of the month by filtering what year and month then fetches most played album totalling all songs in that album."
+			},
+			"response": []
+		}
+	]
+}
