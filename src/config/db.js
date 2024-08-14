@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-require("dotenv").config({ path: "./config/.env" });
+require("dotenv").config({ path: "./src/config/.env" });
 
 const connectDB = async () => {
   try {
@@ -7,6 +7,10 @@ const connectDB = async () => {
       process.env.NODE_ENV === "test"
         ? process.env.MONGODB_URI_TEST
         : process.env.MONGODB_URI;
+
+    if (!connectionString) {
+      throw new Error("MongoDB URI is not defined");
+    }
 
     await mongoose.connect(connectionString, {});
 
